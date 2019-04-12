@@ -1,0 +1,54 @@
+{
+  "name": "json-logger-service",
+  "version": "1.0.5",
+  "description": "Nest Json LoggerService implementation.",
+  "main": "dist/index",
+  "typings": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist ./coverage",
+    "tslint": "tslint -c tslint.json -t verbose 'spec/**/*.ts' 'src/**/*.ts'",
+    "tslint:fix": "tslint --fix -c tslint.json -t verbose 'spec/**/*.ts' 'src/**/*.ts'",
+    "ts": "tsc",
+    "ts:watch": "tsc -w",
+    "test": "jest --coverage",
+    "build": "npm run clean; npm run ts",
+    "prepublishOnly": "npm run build",
+    "prets": "npm run clean; npm run tslint",
+    "prets:watch": "npm run clean; npm run tslint:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marciopd/json-logger-service.git"
+  },
+  "keywords": [
+    "json",
+    "nest",
+    "logger",
+    "service"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "~6.1.0",
+    "@nestjs/core": "~6.0.0",
+    "@nestjs/platform-express": "~6.0.0",
+    "bunyan": "~1.8.12",
+    "reflect-metadata": "~0.1.13",
+    "rxjs": "~6.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "~23.3.13",
+    "@types/node": "~10.12.18",
+    "@types/supertest": "~2.0.7",
+    "jest": "~24.7.1",
+    "rimraf": "~2.6.3",
+    "ts-jest": "~24.0.2",
+    "tslint": "~5.15.0",
+    "tslint-config-airbnb": "~5.11.1",
+    "tslint-microsoft-contrib": "~6.1.0",
+    "typescript": "~3.4.3"
+  }
+}
