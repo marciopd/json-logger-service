@@ -10,6 +10,10 @@ $ npm i json-logger-service
 
 ## Usage
 
+### Nest Json LoggerService implementation use
+
+Configuring Nest to use a custom Json LoggerService.
+
 ```typescript
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
@@ -21,4 +25,19 @@ const bootstrap = async () => {
     await app.listen(3000);
 };
 bootstrap();
+```
+
+### Using a new Json logger in your classes
+
+```typescript
+import {JsonLogger, LoggerFactory} from 'json-logger-service';
+
+export class HelloWorldService {
+    private logger: JsonLogger = LoggerFactory.createLogger(HelloWorldService.name);
+
+    public getHello(): string {
+        this.logger.info('Hello World!');
+        return 'Hello World!';
+    }
+}
 ```
