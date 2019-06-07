@@ -5,6 +5,7 @@ describe('JsonLoggerService tests', () => {
     let jsonLoggerService: JsonLoggerService;
 
     beforeAll(async () => {
+      process.env.LOGGER_ENV = 'test';
       jsonLoggerService = new JsonLoggerService('MyLoggerService');
     });
 
