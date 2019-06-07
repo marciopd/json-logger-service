@@ -8,6 +8,7 @@ export class LoggerFactory {
       serializers: {
         error: Logger.stdSerializers.err,
       },
+      env: process.env.LOGGER_ENV,
     });
   }
 }
