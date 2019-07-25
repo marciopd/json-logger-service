@@ -1,6 +1,6 @@
 {
   "name": "json-logger-service",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Nest Json LoggerService implementation.",
   "main": "dist/index",
   "typings": "dist/index",
@@ -32,7 +32,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nestjs/common": "~6.1.0",
+    "@nestjs/common": "6.5.3",
     "@nestjs/core": "~6.0.0",
     "@nestjs/platform-express": "~6.0.0",
     "bunyan": "~1.8.12",

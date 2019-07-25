@@ -6,6 +6,7 @@ describe('JsonLoggerService tests', () => {
 
     beforeAll(async () => {
       process.env.LOGGER_ENV = 'test';
+      LoggerFactory.setDefaultLogCustomContextBuilder(undefined);
       jsonLoggerService = new JsonLoggerService('MyLoggerService');
     });
 
@@ -17,16 +18,35 @@ describe('JsonLoggerService tests', () => {
       jsonLoggerService.log('It works!');
     });
 
+    it('Should use custom context builder', () => {
+      const customLogger = new JsonLoggerService('MyLoggerService', {
+        buildCustomContext(): any {
+          return { 'x-request-id': '8324-234-234-234' };
+        },
+      });
+      customLogger.log('Log with x-request-id');
+    });
+
+    it('Should use default context builder', () => {
+      LoggerFactory.setDefaultLogCustomContextBuilder({
+        buildCustomContext(): any {
+          return { PROP_A: 'YES' };
+        },
+      });
+      const customLogger = new JsonLoggerService('MyLoggerService');
+      customLogger.log('Log with default custom context builder');
+    });
+
     it('Should log error', () => {
-      jsonLoggerService.error('It works!', 'TRACE', 'CONTEXT');
+      jsonLoggerService.error({ a: 'CONTEXT' }, 'TRACE', 'It works!');
     });
 
     it('Should log debug', () => {
-      jsonLoggerService.debug('It works!', 'CONTEXT');
+      jsonLoggerService.debug({ a: 'CONTEXT' }, 'It works!');
     });
 
     it('Should log warn', () => {
-      jsonLoggerService.warn('It works!', 'CONTEXT');
+      jsonLoggerService.warn({ a: 'CONTEXT' }, 'It works!');
     });
 
     it('Should log verbose', () => {

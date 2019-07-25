@@ -1,14 +1,26 @@
 import * as Logger from 'bunyan';
-import { JsonLogger } from './JsonLogger.interface';
+import { JsonLogger } from './JsonLogger';
+import { CustomContextBuilderInterface } from './CustomContextBuilder.interface';
 
 export class LoggerFactory {
-  public static createLogger(name: string): JsonLogger {
-    return Logger.createLogger({
+  private static defaultCustomContextBuilder: CustomContextBuilderInterface;
+
+  public static setDefaultLogCustomContextBuilder(
+      defaultCustomContextBuilder: CustomContextBuilderInterface) {
+    LoggerFactory.defaultCustomContextBuilder = defaultCustomContextBuilder;
+  }
+
+  public static createLogger(
+      name: string,
+      customContextBuilder?: CustomContextBuilderInterface): JsonLogger {
+    const bunyanLogger = Logger.createLogger({
       name,
       serializers: {
         error: Logger.stdSerializers.err,
       },
       env: process.env.LOGGER_ENV,
     });
+    return new JsonLogger(bunyanLogger,
+                          customContextBuilder || LoggerFactory.defaultCustomContextBuilder);
   }
 }
