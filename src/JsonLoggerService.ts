@@ -13,23 +13,23 @@ export class JsonLoggerService implements LoggerService {
     this.logger = LoggerFactory.createLogger(name, customContextBuilder);
   }
 
-  public log(context: any, message?: string): any {
+  public log(message: any, context?: string): any {
     return this.logger.info(context, message);
   }
 
-  public error(context: any, trace?: string, message?: string): any {
+  public error(message: any, trace?: string, context?: string): any {
     return this.logger.error(context, trace, message);
   }
 
-  public warn(context: any, message?: string): any {
+  public warn(message: any, context?: string): any {
     return this.logger.warn(context, message);
   }
 
-  public debug?(context: any, message?: string): any {
+  public debug?(message: any, context?: string): any {
     return this.logger.debug(context, message);
   }
 
-  public verbose?(context: any, message?: string): any {
+  public verbose?(message: any, context?: string): any {
     return this.logger.trace(context, message);
   }
 }

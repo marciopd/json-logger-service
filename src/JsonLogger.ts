@@ -40,9 +40,11 @@ export class JsonLogger {
   }
 
   private getBunyanParams(message: string, context: any) {
+    const contextObj = (typeof context) === 'object' ? context : { context };
     return {
       context: message === undefined ?
-          this.getDefaultContextObject() : Object.assign(this.getDefaultContextObject(), context),
+          this.getDefaultContextObject()
+          : Object.assign(this.getDefaultContextObject(), contextObj),
       message: message === undefined ? context : message,
     };
   }

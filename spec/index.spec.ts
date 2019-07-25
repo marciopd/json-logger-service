@@ -42,11 +42,11 @@ describe('JsonLoggerService tests', () => {
     });
 
     it('Should log debug', () => {
-      jsonLoggerService.debug({ a: 'CONTEXT' }, 'It works!');
+      jsonLoggerService.debug('It works!', 'CONTEXT');
     });
 
     it('Should log warn', () => {
-      jsonLoggerService.warn({ a: 'CONTEXT' }, 'It works!');
+      jsonLoggerService.warn('It works!', 'CONTEXT');
     });
 
     it('Should log verbose', () => {
