@@ -1,12 +1,13 @@
 import * as Logger from 'bunyan';
 import { CustomContextBuilderInterface } from './CustomContextBuilder.interface';
+import { LoggerFactory } from './LoggerFactory';
 
 /**
  * More details: https://github.com/trentm/node-bunyan
  */
 export class JsonLogger {
   public constructor(private readonly bunyanLogger: Logger,
-                     private readonly customContextBuilder: CustomContextBuilderInterface) {
+                     private readonly customContextBuilder?: CustomContextBuilderInterface) {
   }
 
   public info(context: any, message?: string): void {
@@ -50,6 +51,9 @@ export class JsonLogger {
   }
 
   private getDefaultContextObject(): any {
-    return this.customContextBuilder && this.customContextBuilder.buildCustomContext() || {};
+    const defaultCustomContextBuilder = LoggerFactory.defaultCustomContextBuilder;
+    return this.customContextBuilder && this.customContextBuilder.buildCustomContext()
+        || defaultCustomContextBuilder && defaultCustomContextBuilder.buildCustomContext()
+        || {};
   }
 }

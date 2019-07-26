@@ -3,7 +3,7 @@ import { JsonLogger } from './JsonLogger';
 import { CustomContextBuilderInterface } from './CustomContextBuilder.interface';
 
 export class LoggerFactory {
-  private static defaultCustomContextBuilder: CustomContextBuilderInterface;
+  public static defaultCustomContextBuilder: CustomContextBuilderInterface;
 
   public static setDefaultLogCustomContextBuilder(
       defaultCustomContextBuilder: CustomContextBuilderInterface) {
@@ -20,7 +20,6 @@ export class LoggerFactory {
       },
       env: process.env.LOGGER_ENV,
     });
-    return new JsonLogger(bunyanLogger,
-                          customContextBuilder || LoggerFactory.defaultCustomContextBuilder);
+    return new JsonLogger(bunyanLogger, customContextBuilder);
   }
 }
