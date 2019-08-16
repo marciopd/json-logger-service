@@ -1,6 +1,6 @@
 import * as Logger from 'bunyan';
-import { CustomContextBuilderInterface } from './CustomContextBuilder.interface';
-import { LoggerFactory } from './LoggerFactory';
+import {CustomContextBuilderInterface} from './CustomContextBuilder.interface';
+import {LoggerFactory} from './LoggerFactory';
 
 /**
  * More details: https://github.com/trentm/node-bunyan
@@ -16,8 +16,16 @@ export class JsonLogger {
   }
 
   public error(context: any, trace?: string, message?: string): void {
-    const bunyanParams = this.getBunyanParams(message, context);
-    this.bunyanLogger.error(bunyanParams.context, trace, bunyanParams.message);
+    if (trace && message) {
+      const bunyanParams = this.getBunyanParams(message, context);
+      this.bunyanLogger.error(bunyanParams.context, trace, bunyanParams.message);
+    } else if (trace) {
+      const bunyanParams = this.getBunyanParams(trace, context);
+      this.bunyanLogger.error(bunyanParams.context, bunyanParams.message);
+    } else {
+      const bunyanParams = this.getBunyanParams(undefined, context);
+      this.bunyanLogger.error(bunyanParams.context, bunyanParams.message);
+    }
   }
 
   public warn(context: any, message?: string): void {

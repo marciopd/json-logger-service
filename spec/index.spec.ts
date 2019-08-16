@@ -38,7 +38,7 @@ describe('JsonLoggerService tests', () => {
     });
 
     it('Should log error', () => {
-      jsonLoggerService.error({ a: 'CONTEXT' }, 'TRACE', 'It works!');
+      jsonLoggerService.error('It works!', 'TRACE', 'CONTEXT');
     });
 
     it('Should log debug', () => {
@@ -77,6 +77,14 @@ describe('LoggerFactory tests', () => {
 
     it('Should log error without throwing errors', () => {
       logger.error('It works!');
+    });
+
+    it('Should log error with context without throwing errors', () => {
+      logger.error({ context: 'Hello World' }, 'It works!');
+    });
+
+    it('Should log error with context and trace without throwing errors', () => {
+      logger.error({ context: 'Hello World' }, 'TRACE', 'It works!');
     });
 
     it('Should log warn without throwing errors', () => {
