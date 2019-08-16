@@ -1,6 +1,6 @@
 import * as Logger from 'bunyan';
-import {CustomContextBuilderInterface} from './CustomContextBuilder.interface';
-import {LoggerFactory} from './LoggerFactory';
+import { CustomContextBuilderInterface } from './CustomContextBuilder.interface';
+import { LoggerFactory } from './LoggerFactory';
 
 /**
  * More details: https://github.com/trentm/node-bunyan
