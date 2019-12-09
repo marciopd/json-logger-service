@@ -25,10 +25,10 @@ export class RequestLogger {
           ? PATH_OMITTED : req.path;
 
       const method = req.method ? req.method : '';
-      RequestLogger.LOGGER.info(`Before request ${method} '${requestPath}'`);
+      RequestLogger.LOGGER.info({ uri: requestPath }, `Before request ${method} '${requestPath}'`);
       onFinished(res, () => {
         RequestLogger.LOGGER.info(
-            `After request ${method} '${requestPath}'`);
+            { uri: requestPath }, `After request ${method} '${requestPath}'`);
       });
 
       next();
