@@ -1,7 +1,7 @@
 import { RequestLogger } from '../index';
 
 describe('RequestLogger tests', () => {
-  let requestLogger: RequestLogger;
+  let requestLogger: any;
   let nextCalled: boolean;
   const nextFunction = () => { nextCalled = true; };
   const responseMock = {
@@ -11,13 +11,13 @@ describe('RequestLogger tests', () => {
   };
 
   beforeAll(async () => {
-    requestLogger = new RequestLogger();
+    requestLogger = RequestLogger.buildExpressRequestLogger();
     nextCalled = false;
   });
 
   describe('When request is undefined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest(undefined, undefined, nextFunction);
+      requestLogger(undefined, undefined, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -27,7 +27,7 @@ describe('RequestLogger tests', () => {
 
   describe('When path is undefined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ path: undefined }, undefined, nextFunction);
+      requestLogger({ path: undefined }, undefined, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -37,7 +37,7 @@ describe('RequestLogger tests', () => {
 
   describe('When path is defined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ path: '/mypath' }, responseMock, nextFunction);
+      requestLogger({ path: '/mypath' }, responseMock, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -47,8 +47,7 @@ describe('RequestLogger tests', () => {
 
   describe('When path and method is defined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ path: '/mypath', method: 'GET' },
-                                      responseMock, nextFunction);
+      requestLogger({ path: '/mypath', method: 'GET' }, responseMock, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -58,8 +57,8 @@ describe('RequestLogger tests', () => {
 
   describe('When path is blacklisted', () => {
     beforeEach(() => {
-      requestLogger = new RequestLogger(['/mypath/do-not-log']);
-      requestLogger.logExpressRequest(
+      requestLogger = RequestLogger.buildExpressRequestLogger(['/mypath/do-not-log']);
+      requestLogger(
           { path: '/mypath/do-not-log/customerEmail@gmail.com', method: 'GET' },
           responseMock, nextFunction);
     });

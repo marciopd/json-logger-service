@@ -55,7 +55,7 @@ import {RequestLogger} from 'json-logger-service';
 const bootstrap = async () => {
     const app = await NestFactory.create(AppModule);
     ...
-    app.use(new RequestLogger().logExpressRequest);
+    app.use(RequestLogger.buildExpressRequestLogger());
     ...
     await app.listen(3000);
 };
@@ -72,7 +72,7 @@ Considering a request to  `/mypath`, the logger output should be something like:
 An array of base paths you don't want to log (for security or GDPR reasons maybe) can be passed in the RequestLogger constructor.
 
 ```typescript
-app.use(new RequestLogger(['/my-path-with-sensible-information']).logExpressRequest);
+app.use(RequestLogger.buildExpressRequestLogger(['/my-path-with-sensible-information']));
 ```
 
 Then, considering a request to  `/my-path-with-sensible-information/customerEmail@gmail.com`, the logger output should be something like:
