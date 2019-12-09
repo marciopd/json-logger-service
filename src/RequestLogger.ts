@@ -1,5 +1,5 @@
-import {JsonLogger} from './JsonLogger';
-import {LoggerFactory} from './LoggerFactory';
+import { JsonLogger } from './JsonLogger';
+import { LoggerFactory } from './LoggerFactory';
 
 const onFinished = require('on-finished');
 
