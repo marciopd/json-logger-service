@@ -1,5 +1,6 @@
 import { JsonLogger } from './JsonLogger';
 import { LoggerFactory } from './LoggerFactory';
+const onFinished = require('on-finished');
 
 export class RequestLogger {
   private static readonly LOGGER: JsonLogger = LoggerFactory.createLogger(RequestLogger.name);
@@ -12,9 +13,14 @@ export class RequestLogger {
       return;
     }
 
-    RequestLogger.LOGGER.info(`Before request '${requestPath}'`);
+    const method = req.method ? req.method : '';
+    RequestLogger.LOGGER.info(`Before request ${method} '${requestPath}'`);
+    onFinished(res, (error) => {
+      RequestLogger.LOGGER.info(
+          `After request ${method} '${requestPath}' with ${error ? 'ERROR' : 'SUCCESS'}`);
+    });
+
     next();
-    RequestLogger.LOGGER.info(`After request '${requestPath}'`);
     return;
   }
 }

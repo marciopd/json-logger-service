@@ -4,6 +4,11 @@ describe('RequestLogger tests', () => {
   let requestLogger: RequestLogger;
   let nextCalled: boolean;
   const nextFunction = () => { nextCalled = true; };
+  const responseMock = {
+    socket: {
+      finished: true,
+    },
+  };
 
   beforeAll(async () => {
     requestLogger = new RequestLogger();
@@ -41,9 +46,8 @@ describe('RequestLogger tests', () => {
   });
 
   describe('When path is defined', () => {
-
     beforeEach(() => {
-      requestLogger.logExpressRequest({ route: { path: '/mypath' } }, undefined, nextFunction);
+      requestLogger.logExpressRequest({ route: { path: '/mypath' } }, responseMock, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -51,4 +55,14 @@ describe('RequestLogger tests', () => {
     });
   });
 
+  describe('When path and method is defined', () => {
+    beforeEach(() => {
+      requestLogger.logExpressRequest({ route: { path: '/mypath' }, method: 'GET' },
+                                      responseMock, nextFunction);
+    });
+
+    it('Should return without failing', () => {
+      expect(nextCalled).toBeTruthy();
+    });
+  });
 });
