@@ -37,6 +37,7 @@ export class HelloWorldService {
 
     public getHello(): string {
         this.logger.info('Hello World!');
+        this.logger.info({myContextProperty: 'My property\'s value', anotherProperty: 'Another value'}, 'Hello World with some context!');
         return 'Hello World!';
     }
 }
