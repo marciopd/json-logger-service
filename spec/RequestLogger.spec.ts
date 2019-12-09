@@ -25,19 +25,9 @@ describe('RequestLogger tests', () => {
     });
   });
 
-  describe('When route is undefined', () => {
-    beforeEach(() => {
-      requestLogger.logExpressRequest({}, undefined, nextFunction);
-    });
-
-    it('Should return without failing', () => {
-      expect(nextCalled).toBeTruthy();
-    });
-  });
-
   describe('When path is undefined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ route: undefined }, undefined, nextFunction);
+      requestLogger.logExpressRequest({ path: undefined }, undefined, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -47,7 +37,7 @@ describe('RequestLogger tests', () => {
 
   describe('When path is defined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ route: { path: '/mypath' } }, responseMock, nextFunction);
+      requestLogger.logExpressRequest({ path: '/mypath' }, responseMock, nextFunction);
     });
 
     it('Should return without failing', () => {
@@ -57,8 +47,21 @@ describe('RequestLogger tests', () => {
 
   describe('When path and method is defined', () => {
     beforeEach(() => {
-      requestLogger.logExpressRequest({ route: { path: '/mypath' }, method: 'GET' },
+      requestLogger.logExpressRequest({ path: '/mypath', method: 'GET' },
                                       responseMock, nextFunction);
+    });
+
+    it('Should return without failing', () => {
+      expect(nextCalled).toBeTruthy();
+    });
+  });
+
+  describe('When path is blacklisted', () => {
+    beforeEach(() => {
+      requestLogger = new RequestLogger(['/mypath/do-not-log']);
+      requestLogger.logExpressRequest(
+          { path: '/mypath/do-not-log/customerEmail@gmail.com', method: 'GET' },
+          responseMock, nextFunction);
     });
 
     it('Should return without failing', () => {

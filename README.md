@@ -33,7 +33,7 @@ bootstrap();
 import {JsonLogger, LoggerFactory} from 'json-logger-service';
 
 export class HelloWorldService {
-    private logger: JsonLogger = LoggerFactory.createLogger(HelloWorldService.name);
+    private readonly logger: JsonLogger = LoggerFactory.createLogger(HelloWorldService.name);
 
     public getHello(): string {
         this.logger.info('Hello World!');
@@ -64,7 +64,20 @@ bootstrap();
 
 Considering a request to  `/mypath`, the logger output should be something like:
 ```json
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request '/mypath'","time":"2019-12-09T12:10:23.020Z","v":0}
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request '/mypath'","time":"2019-12-09T12:10:23.021Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET '/mypath'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET '/mypath'","time":"2019-12-09T12:10:23.021Z","v":0}
+
+```
+
+An array of base paths you don't want to log (for security or GDPR reasons maybe) can be passed in the RequestLogger constructor.
+
+```typescript
+app.use(new RequestLogger(['/my-path-with-sensible-information']).logExpressRequest);
+```
+
+Then, considering a request to  `/my-path-with-sensible-information/customerEmail@gmail.com`, the logger output should be something like:
+```json
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET 'Path Omitted'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET 'Path Omitted'","time":"2019-12-09T12:10:23.021Z","v":0}
 
 ```
