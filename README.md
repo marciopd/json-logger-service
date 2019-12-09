@@ -5,7 +5,7 @@ Provides a Json [Nest LoggerService](https://docs.nestjs.com/techniques/logger).
 ## Installation
 
 ```bash
-$ npm i json-logger-service
+$ npm i json-logger-service --save
 ```
 
 ## Usage
@@ -41,4 +41,30 @@ export class HelloWorldService {
         return 'Hello World!';
     }
 }
+```
+
+### Use Express request logger
+
+Configuring Nest to use a simple Express request logger.
+
+```typescript
+import {NestFactory} from '@nestjs/core';
+import {AppModule} from './app.module';
+import {RequestLogger} from 'json-logger-service';
+
+const bootstrap = async () => {
+    const app = await NestFactory.create(AppModule);
+    ...
+    app.use(new RequestLogger().logExpressRequest);
+    ...
+    await app.listen(3000);
+};
+bootstrap();
+```
+
+Considering a request to  `/mypath`, the logger output should be something like:
+```json
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request '/mypath'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request '/mypath'","time":"2019-12-09T12:10:23.021Z","v":0}
+
 ```
