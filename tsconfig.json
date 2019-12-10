@@ -13,7 +13,8 @@
   "exclude": ["node_modules"],
   "include": [
     "package.json",
+    "index.ts",
     "src/**/*",
-    "test/**/*"
+    "spec/**/*"
   ]
 }
