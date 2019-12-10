@@ -48,6 +48,7 @@ export class JsonLogger {
     this.bunyanLogger.fatal(bunyanParams.context, bunyanParams.message);
   }
 
+  // tslint:disable-next-line:typedef
   private getBunyanParams(message: string, context: any) {
     const contextObj = (typeof context) === 'object' ? context : { context };
     return {

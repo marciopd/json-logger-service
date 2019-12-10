@@ -1,46 +1,69 @@
-import { JsonLogger } from './JsonLogger';
-import { LoggerFactory } from './LoggerFactory';
+import {LoggerFactory} from './LoggerFactory';
+import {RequestLoggerOptions} from './RequestLoggerOptions';
 
 const onFinished = require('on-finished');
 
-const PATH_OMITTED = 'Path Omitted';
-
 export class RequestLogger {
-  private static readonly LOGGER: JsonLogger = LoggerFactory.createLogger(RequestLogger.name);
+    public static buildExpressRequestLogger(options?: RequestLoggerOptions): any {
+        if (!options) {
+            // tslint:disable-next-line:no-parameter-reassignment
+            options = {} as any;
+        }
 
-  public static buildExpressRequestLogger(omitBasePaths?: string[]): any {
-    if (!omitBasePaths) {
-      // tslint:disable-next-line:no-parameter-reassignment
-      omitBasePaths = [];
+        if (!options.doNotLogPaths) {
+            options.doNotLogPaths = [];
+        }
+
+        if (!options.logOnlyBasePaths) {
+            options.logOnlyBasePaths = [];
+        }
+
+        if (!options.jsonLogger) {
+            options.jsonLogger = LoggerFactory.createLogger(RequestLogger.name);
+        }
+
+        const logger = options.jsonLogger;
+
+        return (req, res, next) => {
+            if (!(req && req.path)) {
+                logger.warn('No request path defined.');
+                next();
+                return;
+            }
+
+            if (RequestLogger.isInDoNotLogPaths(req.path, options.doNotLogPaths)) {
+                next();
+                return;
+            }
+
+            const requestPath = RequestLogger.getPathToLog(req.path, options.logOnlyBasePaths);
+
+            const method = req.method ? req.method : '';
+            logger.info({uri: requestPath},
+                        `Before request ${method} '${requestPath}'`);
+            onFinished(res, () => {
+                logger.info({uri: requestPath}, `After request ${method} '${requestPath}'`);
+            });
+
+            next();
+        };
     }
 
-    return (req, res, next) => {
-      if (!(req && req.path)) {
-        RequestLogger.LOGGER.warn('No request path defined.');
-        next();
-        return;
-      }
-
-      const requestPath = RequestLogger.isPathOmitted(req.path, omitBasePaths)
-          ? PATH_OMITTED : req.path;
-
-      const method = req.method ? req.method : '';
-      RequestLogger.LOGGER.info({ uri: requestPath }, `Before request ${method} '${requestPath}'`);
-      onFinished(res, () => {
-        RequestLogger.LOGGER.info(
-            { uri: requestPath }, `After request ${method} '${requestPath}'`);
-      });
-
-      next();
-    };
-  }
-
-  private static isPathOmitted(requestPath: string, omitBasePaths: string[]): boolean {
-    for (const blackListedPath of omitBasePaths) {
-      if (requestPath.startsWith(blackListedPath)) {
-        return true;
-      }
+    private static getPathToLog(requestPath: string, logOnlyBasePaths: string[]): string {
+        for (const logOnlyBasePath of logOnlyBasePaths) {
+            if (requestPath.startsWith(logOnlyBasePath)) {
+                return logOnlyBasePath;
+            }
+        }
+        return requestPath;
     }
-    return false;
-  }
+
+    private static isInDoNotLogPaths(requestPath: string, doNotLogPaths: string[]): boolean {
+        for (const doNotLogPath of doNotLogPaths) {
+            if (requestPath.startsWith(doNotLogPath)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

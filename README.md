@@ -69,15 +69,29 @@ Considering a request to  `/mypath`, the logger output should be something like:
 
 ```
 
-An array of base paths you don't want to log (for security or GDPR reasons maybe) can be passed in the RequestLogger constructor.
+#### doNotLogPaths
+
+An array of base paths you do NOT want to log at all can be passed too.
 
 ```typescript
-app.use(RequestLogger.buildExpressRequestLogger(['/my-path-with-sensible-information']));
+app.use(RequestLogger.buildExpressRequestLogger({ doNotLogPaths: ['/health-server-status'] } as RequestLoggerOptions));
 ```
 
-Then, considering a request to  `/my-path-with-sensible-information/customerEmail@gmail.com`, the logger output should be something like:
+Then considering a request to  `/health-server-status`, the logger will not log anything.
+
+#### logOnlyBasePaths
+
+An array of base paths you want to log without the full path (for security or GDPR reasons maybe) can be passed in the RequestLogger constructor.
+
+```typescript
+app.use(RequestLogger.buildExpressRequestLogger({ logOnlyBasePaths: ['/my-path'] } as RequestLoggerOptions));
+```
+
+Then, considering a request to  `/my-path/customerEmail@gmail.com`, the logger output should be something like:
+
 ```json
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET 'Path Omitted'","time":"2019-12-09T12:10:23.020Z","v":0}
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET 'Path Omitted'","time":"2019-12-09T12:10:23.021Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET '/my-path'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET '/my-path'","time":"2019-12-09T12:10:23.021Z","v":0}
 
 ```
+

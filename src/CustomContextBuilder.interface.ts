@@ -1,3 +1,3 @@
 export interface CustomContextBuilderInterface {
-  buildCustomContext(): any;
+    buildCustomContext(): any;
 }
