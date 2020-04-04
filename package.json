@@ -1,6 +1,6 @@
 {
   "name": "json-logger-service",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Nest Json LoggerService implementation.",
   "main": "dist/index",
   "typings": "dist/index",
