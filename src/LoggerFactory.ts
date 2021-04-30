@@ -20,6 +20,7 @@ export class LoggerFactory {
                                                          error: Logger.stdSerializers.err,
                                                      },
                                                      env: process.env.LOGGER_ENV,
+                                                     level: process.env.LOGGER_LEVEL || 'info',
                                                  });
         return new JsonLogger(bunyanLogger, customContextBuilder);
     }
