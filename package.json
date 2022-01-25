@@ -37,7 +37,8 @@
     "@nestjs/platform-express": "^8.0.0",
     "bunyan": "^2.0.0",
     "on-finished": "^2.3.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.1.0"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
