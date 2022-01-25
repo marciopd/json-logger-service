@@ -1,6 +1,7 @@
 import {LoggerFactory} from './LoggerFactory';
 import {RequestLoggerOptions} from './RequestLoggerOptions';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const onFinished = require('on-finished');
 
 export class RequestLogger {
