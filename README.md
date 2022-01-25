@@ -103,3 +103,13 @@ Then, considering a request to  `/my-path/customerEmail@gmail.com`, the logger o
 
 ```
 
+### Logging Level
+
+General Logging level can be changed centrally using [environment property](https://nodejs.dev/learn/how-to-read-environment-variables-from-nodejs) LOGGER_LEVEL.
+Possible values: 
+- fatal
+- error
+- warn
+- info (default)
+- debug
+- trace
