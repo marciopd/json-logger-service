@@ -10,6 +10,14 @@ $ npm i json-logger-service --save
 
 ## Usage
 
+### Nest.js compatibility matrix
+
+| Nest.js version | json-logger-service comptible version |
+|-----------------|:-------------------------------------:|
+| 8.x.x           |                 8.x.x                 |
+| 7.x.x           |                 7.x.x                 |
+
+
 ### Nest Json LoggerService implementation use
 
 Configuring Nest to use a custom Json LoggerService.
