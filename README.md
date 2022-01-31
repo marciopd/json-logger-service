@@ -12,10 +12,10 @@ $ npm i json-logger-service --save
 
 ### Nest.js compatibility matrix
 
-| Nest.js version | json-logger-service comptible version |
-|-----------------|:-------------------------------------:|
-| 8.x.x           |                 8.x.x                 |
-| 7.x.x           |                 7.x.x                 |
+| Nest.js version | json-logger-service compatible version |
+|-----------------|:--------------------------------------:s|
+| 8.x.x           |                 8.x.x                  |
+| 7.x.x           |                 7.x.x                  |
 
 
 ### Nest Json LoggerService implementation use
@@ -72,8 +72,8 @@ bootstrap();
 
 Considering a request to  `/mypath`, the logger output should be something like:
 ```json
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET '/mypath'","time":"2019-12-09T12:10:23.020Z","v":0}
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET '/mypath'","time":"2019-12-09T12:10:23.021Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":1,"level":30,"msg":"Before request GET '/mypath'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":1,"level":30,"msg":"After request GET '/mypath'","time":"2019-12-09T12:10:23.021Z","v":0}
 
 ```
 
@@ -98,8 +98,8 @@ app.use(RequestLogger.buildExpressRequestLogger({ logOnlyBasePaths: ['/my-path']
 Then, considering a request to  `/my-path/customerEmail@gmail.com`, the logger output should be something like:
 
 ```json
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"Before request GET '/my-path'","time":"2019-12-09T12:10:23.020Z","v":0}
-{"name":"RequestLogger","hostname":"HOSTNAME","pid":PID,"level":30,"msg":"After request GET '/my-path'","time":"2019-12-09T12:10:23.021Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":1,"level":30,"msg":"Before request GET '/my-path'","time":"2019-12-09T12:10:23.020Z","v":0}
+{"name":"RequestLogger","hostname":"HOSTNAME","pid":1,"level":30,"msg":"After request GET '/my-path'","time":"2019-12-09T12:10:23.021Z","v":0}
 
 ```
 
