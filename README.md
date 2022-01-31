@@ -1,4 +1,5 @@
-# json-logger-service
+# json-logger-service 
+[![](https://img.shields.io/npm/dm/json-logger-service.svg)](https://www.npmjs.com/package/json-logger-service)
 
 Provides a Json [Nest LoggerService](https://docs.nestjs.com/techniques/logger).
 
