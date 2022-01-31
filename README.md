@@ -14,7 +14,7 @@ $ npm i json-logger-service --save
 ### Nest.js compatibility matrix
 
 | Nest.js version | json-logger-service compatible version |
-|-----------------|:--------------------------------------:s|
+|-----------------|:--------------------------------------:|
 | 8.x.x           |                 8.x.x                  |
 | 7.x.x           |                 7.x.x                  |
 
