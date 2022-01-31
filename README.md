@@ -1,4 +1,5 @@
-# json-logger-service
+# json-logger-service 
+[![](https://img.shields.io/npm/dm/json-logger-service.svg)](https://www.npmjs.com/package/json-logger-service)
 
 Provides a Json [Nest LoggerService](https://docs.nestjs.com/techniques/logger).
 
@@ -13,7 +14,7 @@ $ npm i json-logger-service --save
 ### Nest.js compatibility matrix
 
 | Nest.js version | json-logger-service compatible version |
-|-----------------|:--------------------------------------:s|
+|-----------------|:--------------------------------------:|
 | 8.x.x           |                 8.x.x                  |
 | 7.x.x           |                 7.x.x                  |
 
