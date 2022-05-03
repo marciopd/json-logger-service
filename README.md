@@ -126,6 +126,8 @@ Here's an example on how to do it:
 LOGGER_PRETTY_PRINT=true npm run test
 ```
 
+Then the console output would look like:
+
 ```bash
 [2022-05-03T20:22:19.588Z]  INFO: MyPrettyLogger/22689 on MBP-van-Marcio: It works! (env=local)
 ```
