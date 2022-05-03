@@ -99,4 +99,27 @@ describe('LoggerFactory tests', () => {
             logger.trace('It works!');
         });
     });
+
+    describe('Pretty printing', () => {
+        let logger: JsonLogger;
+
+        beforeAll(() => {
+            process.env.LOGGER_PRETTY_PRINT = 'true';
+            process.env.LOGGER_ENV = 'local';
+            LoggerFactory.setDefaultLogCustomContextBuilder(undefined);
+            logger = LoggerFactory.createLogger('MyPrettyLogger');
+        });
+
+        afterAll(() => {
+            process.env.LOGGER_PRETTY_PRINT = undefined;
+        });
+
+        it('Should return a new instance', () => {
+            expect(logger).toBeDefined();
+        });
+
+        it('Should log without throwing errors', () => {
+            logger.info('It works!');
+        });
+    });
 });
